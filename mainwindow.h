@@ -47,6 +47,10 @@ public slots:
 protected slots:
 	void videoDoubleClicked(Qt::MouseButton button);
 
+protected:
+	virtual void dragEnterEvent(QDragEnterEvent* dragEnterEvent);
+	virtual void dropEvent(QDropEvent* dropEvent);
+
 private:
     Ui::MainWindow *ui;
 	VideoWidget* m_videoWidget;

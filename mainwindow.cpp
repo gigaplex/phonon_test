@@ -23,7 +23,7 @@
 
 #include <QFileDialog>
 #include <QMouseEvent>
-#include <QLabel>
+#include <QUrl>
 #include <phonon/videowidget.h>
 #include <phonon/mediaobject.h>
 #include <phonon/seekslider.h>
@@ -33,7 +33,7 @@
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow), m_videoWidget(new VideoWidget()), m_mediaObject(new CustomMediaObject()), m_audioOutput(new CustomAudioOutput(Phonon::VideoCategory))
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 
 	connect(m_videoWidget, SIGNAL(doubleClicked(Qt::MouseButton)), this, SLOT(videoDoubleClicked(Qt::MouseButton)));
 
@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
 	delete m_mediaObject;
 	delete m_audioOutput;
 }
@@ -78,13 +78,7 @@ void MainWindow::LoadFile()
 void MainWindow::LoadFile(const QString& fileName)
 {
 	Phonon::MediaSource source(fileName);
-	if (source == m_mediaObject->currentSource())
-	{
-		if (m_mediaObject->state() != Phonon::PlayingState)
-			m_mediaObject->play();
-		qDebug("Sources are equivalent");
-		return;
-	}
+
 	m_mediaObject->setCurrentSource(source);
 
 	if (m_mediaObject->state() == Phonon::ErrorState)
@@ -137,6 +131,28 @@ void MainWindow::videoDoubleClicked(Qt::MouseButton button)
 				m_videoWidget->exitFullScreen();
 			else
 				m_videoWidget->enterFullScreen();
+		}
+	}
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent* dragEnterEvent)
+{
+	if (dragEnterEvent->mimeData()->hasUrls())
+	{
+		dragEnterEvent->acceptProposedAction();
+	}
+}
+
+void MainWindow::dropEvent(QDropEvent* dropEvent)
+{
+	if (dropEvent->mimeData()->hasUrls())
+	{
+		QList<QUrl> urls = dropEvent->mimeData()->urls();
+
+		if (!urls.isEmpty())
+		{
+			QUrl url = *urls.begin();
+			LoadFile(url.toString());
 		}
 	}
 }

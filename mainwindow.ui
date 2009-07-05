@@ -10,6 +10,9 @@
     <height>519</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>phonon_test</string>
   </property>
@@ -93,7 +96,7 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
