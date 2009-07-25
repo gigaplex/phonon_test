@@ -86,12 +86,6 @@ void MainWindow::LoadFile(const QString& fileName)
 
 	m_mediaObject->play();
 
-	QPushButton* b = new QPushButton(m_videoWidget);
-	b->setText("test");
-	b->setAttribute(Qt::WA_TransparentForMouseEvents);
-	b->setAutoFillBackground(false);
-	b->raise();
-
 	qDebug((QString("Playing ") + fileName).toAscii());
 }
 
