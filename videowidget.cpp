@@ -35,7 +35,44 @@ VideoWidget::~VideoWidget()
 
 void VideoWidget::mouseDoubleClickEvent(QMouseEvent* mouseEvent)
 {
+	Phonon::VideoWidget::mouseDoubleClickEvent(mouseEvent);
 	doubleClicked(mouseEvent->button());
+}
+
+bool VideoWidget::event(QEvent* event)
+{
+	switch(event->type())
+	{
+	case QEvent::MouseMove:
+		unsetCursor();
+	case QEvent::WindowStateChange:
+		{
+			if (windowState() & Qt::WindowFullScreen)
+			{
+				m_timer.start(1000, this);
+			}
+			else
+			{
+				m_timer.stop();
+				unsetCursor();
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	return Phonon::VideoWidget::event(event);
+}
+
+void VideoWidget::timerEvent(QTimerEvent* timerEvent)
+{
+	if (timerEvent->timerId() == m_timer.timerId())
+	{
+		setCursor(Qt::BlankCursor);
+	}
+
+	Phonon::VideoWidget::timerEvent(timerEvent);
 }
 
 CustomAudioOutput::CustomAudioOutput(Phonon::Category category, QObject* parent)

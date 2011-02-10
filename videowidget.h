@@ -21,6 +21,8 @@
 #ifndef VIDEOWIDGET_H
 #define VIDEOWIDGET_H
 
+#include <QtCore/QBasicTimer>
+
 #include <phonon/videowidget.h>
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
@@ -38,6 +40,10 @@ signals:
 
 protected:
 	virtual void mouseDoubleClickEvent(QMouseEvent* mouseEvent);
+	bool event(QEvent* event);
+	void timerEvent(QTimerEvent* timerEvent);
+
+	QBasicTimer m_timer;
 };
 
 // Temporary classes to output debug statements on destruction
