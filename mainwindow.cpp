@@ -31,7 +31,7 @@
 #include "videowidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow(parent), ui(new Ui::MainWindow), m_videoWidget(new VideoWidget()), m_mediaObject(new CustomMediaObject()), m_audioOutput(new CustomAudioOutput(Phonon::VideoCategory))
+	: QMainWindow(parent), ui(new Ui::MainWindow), m_videoWidget(new VideoWidget(this)), m_mediaObject(new CustomMediaObject()), m_audioOutput(new CustomAudioOutput(Phonon::VideoCategory))
 {
 	ui->setupUi(this);
 
